@@ -23,8 +23,9 @@
                         <action selector="quitClickedWithSender:" target="McT-in-5GS" id="MqU-FV-POJ"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="Kjs-HY-2Ry"/>
             </items>
-            <point key="canvasLocation" x="73" y="255"/>
+            <point key="canvasLocation" x="72.5" y="314.5"/>
         </menu>
         <customObject id="McT-in-5GS" customClass="AppDelegate" customModule="USBDetect" customModuleProvider="target">
             <connections>

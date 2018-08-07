@@ -14,6 +14,7 @@ import IOKit.hid
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var statusMenu: NSMenu!
+    var deviceMonitor: USBDetector?
     
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     
@@ -29,16 +30,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.menu = statusMenu
         statusItem.image = icon
         
-        let deviceMonitor = USBDetector()
-        deviceMonitor.monitorUSBEvent()
+        deviceMonitor? = USBDetector()
+        deviceMonitor?.monitorUSBEvent()
+        
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
-    
-    
-
-
 }
 

@@ -10,9 +10,7 @@ import Cocoa
 import Foundation
 import IOKit.hid
 
-class USBDetector: NSObject {
-    var delegate: USBDetectorDelegate?
-    
+class USBDetector: NSObject {    
     func monitorUSBEvent() {
         var portIterator: io_iterator_t = 0
         let matchingDict = IOServiceMatching(kIOUSBDeviceClassName)
@@ -39,7 +37,6 @@ class USBDetector: NSObject {
             notification.soundName = NSUserNotificationDefaultSoundName
             NSUserNotificationCenter.default.deliver(notification)
         }
-        delegate?.deviceAdded(name: name)
     }
 
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
