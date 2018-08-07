@@ -11,6 +11,8 @@ import Foundation
 import IOKit.hid
 
 class USBDetector: NSObject {
+    var delegate: USBDetectorDelegate?
+    
     func monitorUSBEvent() {
         var portIterator: io_iterator_t = 0
         let matchingDict = IOServiceMatching(kIOUSBDeviceClassName)
@@ -29,11 +31,15 @@ class USBDetector: NSObject {
         deviceAdded(refCon: nil, iterator: portIterator)
     }
 
-    func showUSBConnectedNotification() -> Void {
-        let notification = NSUserNotification()
-        notification.title = "USB Device Connected"
-        notification.soundName = NSUserNotificationDefaultSoundName
-        NSUserNotificationCenter.default.deliver(notification)
+    func showUSBConnectedNotification(name: String) -> Void {
+        if !(name.contains("Root") || name.contains("Built-in") || name.contains("Host") || name.contains("Internal")){
+            let notification = NSUserNotification()
+            notification.title = "USB Device Connected"
+            notification.informativeText = name
+            notification.soundName = NSUserNotificationDefaultSoundName
+            NSUserNotificationCenter.default.deliver(notification)
+        }
+        delegate?.deviceAdded(name: name)
     }
 
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
@@ -46,11 +52,22 @@ func deviceAdded(refCon: UnsafeMutableRawPointer?, iterator: io_iterator_t) {
     while case let usbDevice = IOIteratorNext(iterator), usbDevice != 0 {
         var deviceNameAsCFString = UnsafeMutablePointer<io_name_t>.allocate(capacity: 1)
         defer { deviceNameAsCFString.deallocate(capacity: 1) }
-
-        print("device added")
-        USBDetector().showUSBConnectedNotification()
+       
+        var deviceNameCString:[CChar] = [CChar](repeating: 0, count: 128)
+        kr = IORegistryEntryGetName(usbDevice, &deviceNameCString)
+        
+        if(kr != kIOReturnSuccess) {
+            print("Error getting device name")
+        }
+        
+        let name = String.init(cString: &deviceNameCString)
+        print(name)
+        
+        USBDetector().showUSBConnectedNotification(name: name)
         IOObjectRelease(usbDevice)
     }
 }
 
-
+protocol USBDetectorDelegate{
+    func deviceAdded(name: String)
+}
