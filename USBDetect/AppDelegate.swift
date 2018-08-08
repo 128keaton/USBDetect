@@ -59,7 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, USBWatcherDelegate, NSUserNo
     }
 
     func showUSBConnectedNotification(deviceName: String) -> Void {
-        if (!deviceName.contains("Hub") && !deviceName.contains("Internal") && !deviceName.contains("Host")) {
+        if (!deviceName.contains("Hub") && !deviceName.contains("Internal") && !deviceName.contains("Host") && !deviceName.contains("Simulation")) {
             let notification = NSUserNotification()
             notification.title = "USB Device Connected"
             notification.soundName = NSUserNotificationDefaultSoundName
