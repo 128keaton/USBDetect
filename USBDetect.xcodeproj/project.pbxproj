@@ -13,7 +13,7 @@
 		8A7017AD2107873F00D18AF1 /* 16.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7017AB2107873F00D18AF1 /* 16.png */; };
 		8ACB65FF21069933004B9C5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB65FE21069933004B9C5A /* AppDelegate.swift */; };
 		8ACB660321069933004B9C5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ACB660221069933004B9C5A /* Assets.xcassets */; };
-		8ACB660F21069CEE004B9C5A /* USBDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB660E21069CEE004B9C5A /* USBDetector.swift */; };
+		8ACB660F21069CEE004B9C5A /* USBWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB660E21069CEE004B9C5A /* USBWatcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +26,7 @@
 		8ACB660221069933004B9C5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8ACB660721069933004B9C5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8ACB660821069933004B9C5A /* USBDetect.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = USBDetect.entitlements; sourceTree = "<group>"; };
-		8ACB660E21069CEE004B9C5A /* USBDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBDetector.swift; sourceTree = "<group>"; };
+		8ACB660E21069CEE004B9C5A /* USBWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBWatcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +65,7 @@
 				8ACB660221069933004B9C5A /* Assets.xcassets */,
 				8ACB660721069933004B9C5A /* Info.plist */,
 				8ACB660821069933004B9C5A /* USBDetect.entitlements */,
-				8ACB660E21069CEE004B9C5A /* USBDetector.swift */,
+				8ACB660E21069CEE004B9C5A /* USBWatcher.swift */,
 				8A7017AB2107873F00D18AF1 /* 16.png */,
 				8A7017AA2107873F00D18AF1 /* 32.png */,
 			);
@@ -146,7 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8ACB660F21069CEE004B9C5A /* USBDetector.swift in Sources */,
+				8ACB660F21069CEE004B9C5A /* USBWatcher.swift in Sources */,
 				8ACB65FF21069933004B9C5A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
