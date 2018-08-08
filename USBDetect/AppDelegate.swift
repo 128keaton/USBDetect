@@ -14,14 +14,12 @@ import IOKit.hid
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, USBWatcherDelegate, NSUserNotificationCenterDelegate {
     @IBOutlet weak var statusMenu: NSMenu!
+
+    var usbWatcher: USBWatcher? = nil
     var separator: NSMenuItem? = nil
+    var visibleDevices: [String:Int] = [:]
 
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-    var usbWatcher: USBWatcher? = nil
-    @IBAction func quitClicked(sender: NSMenuItem) {
-        NSApplication.shared.terminate(self)
-    }
-
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -40,31 +38,41 @@ class AppDelegate: NSObject, NSApplicationDelegate, USBWatcherDelegate, NSUserNo
     func deviceAdded(_ device: io_object_t) {
         print("Device added: \(device.name()!)")
         showUSBConnectedNotification(deviceName: device.name()!)
+        
+        if (separator == nil) {
+            separator = NSMenuItem.separator()
+            statusMenu.addItem(separator!)
+        }
+        let newItem = NSMenuItem(title: device.name()!, action: nil, keyEquivalent: String())
+        statusMenu.addItem(newItem)
+        visibleDevices[device.name()!] = statusMenu.index(of: newItem)
     }
 
     func deviceRemoved(_ device: io_object_t) {
+        guard let menuItemIndex = (visibleDevices[device.name()!])
+            else{
+                print("Menu item not found")
+                return
+        }
+        statusMenu.removeItem(at: menuItemIndex)
         print("Device removed: \(device.name()!)")
     }
 
     func showUSBConnectedNotification(deviceName: String) -> Void {
-        if (!deviceName.contains("Hub") && !deviceName.contains("Internal")  && !deviceName.contains("Host")) {
+        if (!deviceName.contains("Hub") && !deviceName.contains("Internal") && !deviceName.contains("Host")) {
             let notification = NSUserNotification()
             notification.title = "USB Device Connected"
             notification.soundName = NSUserNotificationDefaultSoundName
             notification.subtitle = deviceName
             NSUserNotificationCenter.default.deliver(notification)
         }
-        
-        if (separator == nil){
-            separator = NSMenuItem.separator()
-            statusMenu.addItem(separator!)
-        }
-        statusMenu.addItem(withTitle: deviceName, action: nil, keyEquivalent: String())
     }
 
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
         return true
     }
 
+    @IBAction func quitClicked(sender: NSMenuItem) {
+        NSApplication.shared.terminate(self)
+    }
 }
-
